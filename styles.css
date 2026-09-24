@@ -85,7 +85,7 @@ ol, ul { list-style: none; }
 }
 .skip-link:focus { transform: none; }
 
-/* Escala de capas: 10 menú, 20 navegación, 30 skip link. */
+/* Escala de capas: 10 menú, 20 navegación, 30 skip link, 39 y 40 cursor. */
 
 /* ---------- Tipografía base ---------- */
 
@@ -133,9 +133,16 @@ ol, ul { list-style: none; }
 .nav.is-top { background: transparent; }
 .menu-open .nav { background: transparent; color: var(--bg); transform: none; }
 .nav-logo { font-weight: 700; letter-spacing: -0.03em; }
-.nav-links { display: flex; gap: 24px; }
+.nav-links { display: flex; gap: 24px; margin-left: auto; }
 .nav-links a { padding-bottom: 2px; border-bottom: 1px solid transparent; transition: border-color 0.2s var(--ease-out); }
 .nav-links a:hover { border-color: currentColor; }
+
+.nav-actions { display: flex; align-items: center; gap: 20px; }
+.lang-toggle {
+  padding: 4px 0 2px; border: 0; border-bottom: 1px solid currentColor; background: none; color: inherit;
+  font: inherit; letter-spacing: 0.02em; cursor: pointer;
+}
+.lang-toggle:hover { border-bottom-width: 3px; padding-bottom: 0; }
 
 .nav-toggle {
   display: none;
@@ -178,15 +185,6 @@ ol, ul { list-style: none; }
 }
 .hero-title { text-align: center; }
 
-.inline-photo {
-  display: inline-block;
-  width: 0.92em; height: 0.7em;
-  margin-left: 0.04em;
-  overflow: hidden;
-  vertical-align: baseline;
-  background: var(--surface);
-}
-.inline-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 34%; }
 
 .hero-foot {
   display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
@@ -197,7 +195,6 @@ ol, ul { list-style: none; }
 @media (max-width: 767px) {
   .hero { gap: 40px; min-height: auto; padding-top: 160px; }
   .hero-title { font-size: 19vw; }
-  .inline-photo { width: 0.7em; }
   .hero-foot { flex-direction: column; align-items: flex-start; }
 }
 
@@ -205,28 +202,44 @@ ol, ul { list-style: none; }
 
 /* ---------- Perfil ---------- */
 
-.profile .label { margin-bottom: 24px; }
+.profile { display: grid; gap: 48px; }
+.profile-body .label { margin-bottom: 24px; }
+.profile-body 
+.profile-photo {
+  width: min(72%, 420px);
+  aspect-ratio: 473 / 517;
+  overflow: hidden;
+  background: var(--surface);
+}
+.profile-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 0.8s var(--ease-out);
+}
+.profile-photo:hover img { filter: grayscale(0) contrast(1); }
+
+@media (min-width: 900px) {
+  .profile { grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: start; }
+  .profile-photo { grid-column: 1 / span 4; width: 100%; position: sticky; top: 96px; }
+  .profile-body { grid-column: 6 / -1; }
+}
 .profile-lead {
-  max-width: 22ch;
+  max-width: 20ch;
   font-size: var(--text-heading);
   line-height: 1;
   letter-spacing: -0.03em;
   text-wrap: pretty;
 }
-@media (min-width: 768px) { .profile-lead { max-width: 24ch; } }
+@media (min-width: 768px) { .profile-lead { max-width: 22ch; } }
 
 .profile-cols {
   display: grid; gap: 32px;
   margin-top: clamp(56px, 8vw, 112px);
 }
-.profile-cols .label { margin-bottom: 8px; }
 .profile-cols p { font-size: var(--text-caption); max-width: 36ch; }
 
 @media (min-width: 768px) {
-  .profile-cols { grid-template-columns: repeat(12, 1fr); gap: 24px; }
-  .profile-cols > div:nth-child(1) { grid-column: 5 / span 3; }
-  .profile-cols > div:nth-child(2) { grid-column: 8 / span 2; }
-  .profile-cols > div:nth-child(3) { grid-column: 10 / span 3; }
+  .profile-cols { grid-template-columns: 5fr 4fr 5fr; gap: 24px; }
 }
 
 /* ---------- Trabajos ---------- */
@@ -332,6 +345,37 @@ ol, ul { list-style: none; }
   display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
   padding: 24px 0 32px;
   border-top: 1px solid currentColor;
+}
+
+/* ---------- Scroll suave (Lenis) ---------- */
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ---------- Cursor ---------- */
+
+.has-cursor, .has-cursor * { cursor: none !important; }
+
+.cursor {
+  position: fixed; top: 0; left: 0; z-index: 40;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--bone);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  will-change: transform;
+}
+.cursor.is-visible { opacity: 1; }
+
+.cursor-trail {
+  position: fixed; inset: 0; z-index: 39;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  mix-blend-mode: difference;
 }
 
 /* ---------- Movimiento reducido ---------- */
