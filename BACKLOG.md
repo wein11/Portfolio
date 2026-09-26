@@ -10,7 +10,13 @@ Repositorio: `wein11/portfolio` (GitHub). Dueño: Santiago Weinbinder.
 
 Leé esto antes de tocar cualquier archivo.
 
-1. **Prohibido el guion largo (carácter Unicode U+2014) y el guion medio usado como separador (U+2013).** Es una preferencia explícita del dueño del repo y aplica a todo: textos del sitio, commits, comentarios de código y documentos. Usá punto, coma, dos puntos, paréntesis o un guion común (`-`). Antes de commitear, corré `grep -nP '(*UTF8)[\x{2013}\x{2014}]' index.html styles.css main.js i18n.js BACKLOG.md README.md` y tiene que salir vacío. `DESIGN.md` es un archivo que aportó el usuario y sí tiene guiones largos: no lo reescribas.
+1. **Prohibido el guion largo (carácter Unicode U+2014) y el guion medio usado como separador (U+2013).** Es una preferencia explícita del dueño del repo y aplica a todo: textos del sitio, commits, comentarios de código y documentos. Usá punto, coma, dos puntos, paréntesis o un guion común (`-`). Antes de commitear, corré este chequeo (funciona igual en Mac y en Linux; no uses `grep -P`, en algunas Mac `grep` es `ugrep` y da error de sintaxis en vez de salir vacío):
+
+   ```bash
+   python3 -c "import sys;b=[f'{f}:{n}' for f in sys.argv[1:] for n,l in enumerate(open(f,encoding='utf-8'),1) if chr(8211) in l or chr(8212) in l];print('\n'.join(b) or 'OK');sys.exit(bool(b))" index.html styles.css main.js i18n.js BACKLOG.md README.md
+   ```
+
+   Tiene que imprimir `OK`. Si encuentra guiones, lista `archivo:línea` y sale con error, así que encadenalo con `&&` antes del `git commit` (nunca con `;`). `DESIGN.md` es un archivo que aportó el usuario y sí tiene guiones largos: no lo reescribas.
 2. **`DESIGN.md` manda sobre las skills.** Cuando una skill contradice el DESIGN.md (por ejemplo taste-skill prohíbe la paleta crema o Impeccable limita el tamaño del display a 6rem), gana el DESIGN.md. Impeccable lo dice textual: "The brief wins".
 3. **Monocromo estricto.** Solo tres colores: `#191919` (tinta), `#efedea` (papel), `#e3e1de` (piedra). Nada de colores de acento, estados de color ni degradados. Si el usuario pide un color de acento, es una decisión suya: preguntale y documentá el cambio acá y en DESIGN.md.
 4. **Radio 0 en todo y cero sombras.** La única excepción es el punto del cursor, que es un círculo porque el usuario pidió "un punto".
