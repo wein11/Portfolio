@@ -20,6 +20,7 @@ Leé esto antes de tocar cualquier archivo.
 8. **El sitio tiene que verse completo sin JavaScript.** Si GSAP no carga, todo el contenido queda visible y estático.
 9. **Sitio estático, sin build.** HTML, CSS y JS planos, pensado para GitHub Pages. No agregues frameworks, bundlers ni `package.json` sin que el usuario lo pida.
 10. **No crees pull requests ni mergees a `main` sin pedido explícito del usuario.**
+11. **Solo se usan las skills y agentes de este repo** (`.claude/skills/` y `.claude/agents/`). Ni skills globales ni de otros proyectos, aunque tengan el mismo nombre: si existe una copia acá, se usa esta. Si hace falta otra skill, preguntale al usuario antes de usarla; también puede ser el usuario quien indique usar otra. Si la sesión no arrancó con este repo como carpeta de trabajo, las skills no se cargan solas: leé el `SKILL.md` de acá a mano.
 
 ---
 
@@ -50,7 +51,7 @@ El usuario pidió instalar cuatro repos de skills. En el entorno no había `gh`,
 | `f8ff4f4` | `Leonxlnx/taste-skill` | 13 skills de `skills/` (taste-skill, taste-skill-v1, gpt-tasteskill, output-skill, minimalist-skill, soft-skill, brutalist-skill, redesign-skill, image-to-code-skill, stitch-skill, imagegen-frontend-web, imagegen-frontend-mobile, brandkit) | `skills/llms.txt` (es un índice, no una skill). |
 | `01f739d` | `greensock/gsap-skills` | 8 skills oficiales de GSAP (gsap-core, gsap-timeline, gsap-scrolltrigger, gsap-plugins, gsap-utils, gsap-performance, gsap-react, gsap-frameworks) | Ejemplos y `llms.txt`. |
 
-Ningún nombre de skill choca con otro. Hay varias skills de diseño que se superponen (frontend-design, impeccable, taste-skill, ui-ux-pro-max): si no se nombra ninguna, el modelo elige.
+Ningún nombre de skill choca con otro. Hay varias skills de diseño que se superponen (frontend-design, impeccable, taste-skill, ui-ux-pro-max): si no se nombra ninguna, el modelo elige entre las de este repo (nunca una de afuera sin preguntar, ver regla 11).
 
 ### 3.2 Rediseño (commit `5d0b373`, rama `claude/portfolio-redesign`)
 
