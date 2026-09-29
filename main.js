@@ -174,7 +174,7 @@
     // Tamaño del punto según lo que hay debajo: cuanto más grande el texto, más grande el círculo.
     const sizes = [
       ['.display, .marquee, .menu a', 150],
-      ['.profile-lead, .contact-mail, .work-title, .edu-item h3', 90],
+      ['.profile-lead, .contact-mail, .work-title, .sys-title, .edu-item h3', 90],
       ['a, button', 60],
       ['p, h3, .label, .work-tag', 40],
     ];
@@ -261,6 +261,13 @@
           scale: 1, duration: 1.6, ease: 'expo.out', stagger: 0.12, clearProps: 'transform',
         });
       },
+    });
+
+    // Sistemas: cada fila del índice sube apenas al entrar, en tanda.
+    ScrollTrigger.batch('.sys-item', {
+      start: 'top 90%',
+      once: true,
+      onEnter: (batch) => gsap.from(batch, { autoAlpha: 0, y: 24, duration: 1, ease: 'expo.out', stagger: 0.08 }),
     });
 
     return () => {

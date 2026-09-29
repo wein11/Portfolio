@@ -81,6 +81,20 @@ Pedidos del usuario y cómo se resolvió cada uno:
 | Traducción al inglés | Botón ES/EN, diccionario en `i18n.js`, persistencia en `localStorage` y parámetro `?lang=en`. |
 | No le gustó la foto dentro del titular | Se sacó del hero. Ahora es un retrato grande en la sección Perfil: blanco y negro, `position: sticky` en escritorio, parallax suave, se descubre al entrar y se pone a color con hover. |
 
+### 3.4 Textos nuevos y sección Sistemas (septiembre 2026)
+
+El usuario pidió reescribir casi todos los textos (el perfil había quedado de 2024) y sumar sus proyectos. Decisiones que tomó y que no se cambian sin preguntarle:
+
+- **Público:** empresas que buscan a alguien para proyectos de tecnología y automatización. Lo web sigue, como prueba de diseño, no como oferta principal.
+- **No está buscando trabajo activamente:** la columna es "Hacia dónde voy" (liderar proyectos de tecnología) y el contacto invita a charlar, no pide un puesto.
+- **Necod se nombra**, con cifras reales (9 personas usan el lector de cotizaciones). Nunca datos de clientes, precios ni capturas de herramientas internas.
+- **Proyectos que no son web** van en la sección Sistemas, como índice tipográfico sin capturas.
+- **Estados:** "En uso" solo si lo usa gente real; "Prototipo" si se armó y probó pero no está en uso (asistente de WhatsApp, Tasaciones); lo que no tiene código no entra (stock dashboard, rediseño de Necod).
+- **Hero** elegido por el usuario: "Automatizo lo repetitivo, diseño lo visible".
+- **Formación:** se sumaron Claude Code (Anthropic Academy, 2026), Cybersecurity Fundamentals (IBM SkillsBuild, 2025, con credencial de Credly), Clic de Mercado Libre (2025) y Google Ads (2024). Los años de estos cuatro son aproximados según el usuario. Coderhouse se agrupó en un ítem.
+- CodeLens pasó de Sitios a Sistemas; su lugar en la grilla lo tomó Dele Parfum (captura sacada del sitio publicado con Chrome headless a 2000 por 1000).
+- Textos revisados con la skill `humanizer` del repo.
+
 ---
 
 ## 4. Qué skills se usaron y para qué
@@ -138,14 +152,14 @@ Orden de carga al final del body, todos con `defer`: GSAP, ScrollTrigger, SplitT
 | `--text-body` | clamp(18px, 1.6vw, 21px) | Intro de contacto |
 | `--text-sub` | clamp(24px, 2.6vw, 34px) | Títulos de proyectos y formación |
 | `--text-heading` | clamp(32px, 5vw, 69px) | Texto del perfil, mail, títulos destacados |
-| `--text-display` | clamp(52px, 13.2vw, 185px) | Titulares gigantes (en celular el hero usa 19vw) |
+| `--text-display` | clamp(52px, 13.2vw, 185px) | Titulares gigantes (en celular el hero usa 15vw, lo máximo para que "REPETITIVO," entre en 360px) |
 | `--gutter` | clamp(16px, 2.4vw, 32px) | Margen lateral |
 | `--edge` | max(gutter, centrado a 1400px) | Margen de nav, formación, cinta y footer para alinear con el contenido |
 | `--section-gap` | clamp(112px, 14vw, 200px) | Separación entre secciones |
 | `--max` | 1400px | Ancho máximo |
 | `--ease-out` | cubic-bezier(0.16, 1, 0.3, 1) | Transiciones CSS |
 
-Display: mayúsculas, peso 400, `line-height: 0.8`, `letter-spacing: -0.05em`. Cada renglón animable es `.line > span`; `.line` tiene `overflow: hidden` y un `padding-top: 0.14em` compensado con margen negativo para que no se corten las tildes ni la Ñ. Si cambiás el line-height, revisá "DISEÑO", "CÓDIGO" y "FORMACIÓN".
+Display: mayúsculas, peso 400, `line-height: 0.8`, `letter-spacing: -0.05em`. Cada renglón animable es `.line > span`; `.line` tiene `overflow: hidden` y un `padding-top: 0.14em` compensado con margen negativo para que no se corten las tildes ni la Ñ. Si cambiás el line-height, revisá "DISEÑO", "SISTEMAS" y "FORMACIÓN". En el hero, "DISEÑO" va debajo de "LO REPETITIVO," y su tilde tocaba la T de arriba: ese renglón lleva `.line-tilde` (margen -0.02em en vez de -0.14em), solo en español: en inglés dice "I DESIGN", sin tilde, y con el margen normal las cuatro líneas quedan parejas. Si un renglón nuevo del hero tiene Ñ o tilde en mayúscula, usá la misma clase.
 
 Modo oscuro: automático por `prefers-color-scheme`. La sección Formación usa `.invert` (fondo `--fg`, texto `--bg`), así que se invierte en ambos modos. Es la única inversión de la página, permitida por DESIGN.md.
 
@@ -157,11 +171,12 @@ Capas (z-index): 10 menú móvil, 20 navegación, 30 skip link, 39 rastro del cu
 |---|---|---|
 | Nav | (header `.nav`) | Logo, links (ocultos en menos de 768px), botón ES/EN y botón Menú en celular. Transparente arriba (`.is-top`), con fondo al scrollear, se esconde al bajar (`.is-hidden`). |
 | Menú móvil | `#menu` | Panel negro a pantalla completa, se abre con `clip-path`. Usa `inert` cuando está cerrado; cierra con Escape, con un link o al pasar a escritorio. |
-| Hero | (sin id, `.hero`) | Solo tipografía: "Diseño / y código / para la web". Pie con metadato y link "Ver trabajos". |
-| Perfil | `#profile` | Grilla de 12 columnas desde 900px: retrato en columnas 1 a 4 (sticky), texto en 6 a 12. Texto grande + tres columnas (Hoy, Estudio, Busco). |
-| Trabajos | `#experience` | Título display con contador `(6)`. Grilla asimétrica de 12 columnas con clases `.w-a` a `.w-f`. Cada tarjeta es un `<a>` entero. |
+| Hero | (sin id, `.hero`) | Solo tipografía, 4 renglones: "Automatizo / lo repetitivo, / diseño / lo visible". Pie con metadato y link "Ver proyectos" (a `#systems`). |
+| Perfil | `#profile` | Grilla de 12 columnas desde 900px: retrato en columnas 1 a 4 (sticky), texto en 6 a 12. Texto grande + tres columnas (Hoy, Estudio, Hacia dónde voy). |
+| Sistemas | `#systems` | Índice tipográfico sin capturas (muchos proyectos usan datos reales de clientes, a propósito no se muestran). Título display con contador `(8)`, intro y `<ol class="sys-list">`: cada `.sys-item` tiene número, título, descripción problema/resultado, link a código si es público, y un `<dl>` con Para, Con (stack) y Estado. Desde 900px: número en columna 1, texto en 2 a 7, metadatos en 9 a 12. |
+| Sitios | `#experience` | Título "Sitios" con contador `(6)`. Grilla asimétrica de 12 columnas con clases `.w-a` a `.w-f`. Cada tarjeta es un `<a>` entero. El id viejo se mantiene para no romper links. |
 | Herramientas | `#tools` | Marquee CSS con dos grupos idénticos (`.marquee-group`). El segundo se oculta con movimiento reducido. Texto accesible aparte en `.sr-only`. |
-| Formación | `#education` | Superficie invertida. `<ol>` de 6 ítems; desde 1100px hay 3 columnas y el primero ocupa 2 columnas por 2 filas (6 celdas exactas, sin huecos). |
+| Formación | `#education` | Superficie invertida. `<ol>` de 8 ítems, del más nuevo al más viejo; desde 1100px hay 3 columnas y el primero ocupa 2 columnas por 1 fila (2 + 7 = 9 celdas, 3 filas exactas). Los 3 cursos de Coderhouse van en un solo ítem con 3 links (`.edu-links`). |
 | Contacto | `#contact` | "Hablemos", mail grande, LinkedIn y GitHub. |
 | Footer | `.footer` | Copyright y "Volver arriba" (apunta a `#top`, un div vacío al inicio del body). |
 
@@ -183,8 +198,8 @@ Capas (z-index): 10 menú móvil, 20 navegación, 30 skip link, 39 rastro del cu
 
 ### Reglas para editar textos
 
-- `data-i18n` pisa **todo** el contenido del elemento. Nunca lo pongas en un elemento que tenga hijos con marcado (por ejemplo el título de Trabajos: la clave va en un `<span>` interno para no borrar el `<sup>(6)</sup>`).
-- Nombres propios que no cambian (Necod, CheckLab, CodeLens, "UADE, Universidad Argentina de la Empresa.", "JavaScript", "Python") no llevan clave.
+- `data-i18n` pisa **todo** el contenido del elemento. Nunca lo pongas en un elemento que tenga hijos con marcado (por ejemplo los títulos de Sistemas y Sitios: la clave va en un `<span>` interno para no borrar el `<sup>(8)</sup>` o `<sup>(6)</sup>`).
+- Nombres propios que no cambian (Necod, CheckLab, CodeLens, fulbito, MGW, Claude Code, Google Ads, "UADE, Universidad Argentina de la Empresa.", los años sueltos, las listas de stack) no llevan clave.
 - Si agregás un texto visible nuevo: poné el español en el HTML con `data-i18n="nueva.clave"` y agregá `'nueva.clave': 'English text'` en `i18n.js`. Si falta la clave en inglés, se muestra el español.
 - Las claves de fecha se reutilizan (`date.nov22` aparece dos veces). Reutilizá claves cuando el texto sea idéntico, como `tag.full` o `cert`.
 
@@ -201,6 +216,7 @@ Todo está en `main.js`. Las animaciones de contenido están dentro de `gsap.mat
 | Retrato | `clip-path` de abajo hacia arriba al entrar; `img` con parallax `yPercent` -6 a 6 y `scrub` | Presenta a la persona al llegar a Perfil |
 | Texto del perfil | SplitText por palabras, opacidad de 0.18 a 1 con `scrub` | Acompaña el ritmo de lectura |
 | Capturas de trabajos | `ScrollTrigger.batch` con `clip-path` y `scale` 1.15 a 1 | Jerarquía: la imagen aparece antes que el texto |
+| Filas de Sistemas | `ScrollTrigger.batch('.sys-item')`, `autoAlpha` 0 a 1 e `y` 24 a 0, stagger 0.08 | El índice no tiene imágenes; las filas entran en tanda para que se lea como lista |
 | Cinta de herramientas | CSS `@keyframes marquee`, 48s, pausa con hover | Muestra muchas herramientas sin una lista larga |
 | Nav | `ScrollTrigger.create` con `onUpdate`, clases `.is-top` y `.is-hidden` | No tapar contenido al leer |
 | Cursor | `quickTo` para seguir el mouse, canvas con rastro en `gsap.ticker`, crece según el elemento con `pointerover` | Pedido del usuario; da respuesta al pasar por el texto |
@@ -231,6 +247,12 @@ Todo está en `main.js`. Las animaciones de contenido están dentro de `gsap.mat
 
 ### Agregar un proyecto
 
+Primero decidí dónde va: si es un sitio web publicado con captura, va en **Sitios**. Si es una herramienta interna, automatización o app (sobre todo si maneja datos reales), va en **Sistemas**, sin captura.
+
+**En Sistemas:** copiá un `<li class="sys-item">`, renumerá (`sys-num`), escribí la descripción como problema y resultado con cifras reales si las hay, completá Para, Con y Estado (reutilizá `sys.for`, `sys.stack`, `sys.status`, `st.*`, `sys.personal`, `code`), agregá las claves en inglés y actualizá el `(8)`. Nunca cifras ni nombres de clientes.
+
+**En Sitios:**
+
 1. Copiá un bloque `<a class="work-item w-?">` en `.work-grid` de `index.html`.
 2. Imagen en `img/`, con `width` y `height` reales, `loading="lazy"`, `decoding="async"` y un `alt` con `data-i18n-alt`.
 3. Descripción con `data-i18n`, etiqueta con `data-i18n` (reutilizá `tag.*` si aplica).
@@ -240,7 +262,7 @@ Todo está en `main.js`. Las animaciones de contenido están dentro de `gsap.mat
 
 ### Agregar un ítem de formación
 
-Copiá un `<li class="edu-item">`. Con 7 ítems la grilla de 3 columnas deja un hueco: revisá la regla `.edu-item:first-child` (hoy ocupa 2 por 2 para que 6 ítems cierren exacto) y ajustala para que la cantidad de celdas cierre.
+Copiá un `<li class="edu-item">` en orden cronológico (más nuevo arriba, UADE siempre primero). Con 9 ítems la grilla de 3 columnas deja un hueco: revisá la regla `.edu-item:first-child` (hoy ocupa 2 columnas por 1 fila para que 8 ítems cierren exacto) y ajustala para que la cantidad de celdas cierre.
 
 ### Cambiar un texto
 

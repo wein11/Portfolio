@@ -100,6 +100,8 @@ ol, ul { list-style: none; }
 /* Cada renglón es una máscara para la entrada de texto. El padding deja lugar a tildes y a la Ñ. */
 .line { display: block; overflow: hidden; padding-top: 0.14em; margin-top: -0.14em; }
 .line > span { display: inline-block; }
+/* Renglón con Ñ debajo de otro renglón: un poco más de aire para que la tilde no toque las letras de arriba. */
+html:lang(es) .line-tilde { margin-top: -0.02em; }
 
 .label { font-size: var(--text-caption); font-weight: 400; letter-spacing: -0.02em; }
 
@@ -194,7 +196,7 @@ ol, ul { list-style: none; }
 
 @media (max-width: 767px) {
   .hero { gap: 40px; min-height: auto; padding-top: 160px; }
-  .hero-title { font-size: 19vw; }
+  .hero-title { font-size: 15vw; }
   .hero-foot { flex-direction: column; align-items: flex-start; }
 }
 
@@ -242,7 +244,34 @@ ol, ul { list-style: none; }
   .profile-cols { grid-template-columns: 5fr 4fr 5fr; gap: 24px; }
 }
 
-/* ---------- Trabajos ---------- */
+/* ---------- Sistemas (índice tipográfico, sin capturas) ---------- */
+
+.systems .display { margin-bottom: 32px; }
+.sys-intro { font-size: var(--text-body); max-width: 40ch; margin-bottom: clamp(48px, 7vw, 112px); }
+
+.sys-item {
+  display: grid; gap: 16px 24px;
+  padding: 20px 0 clamp(32px, 4vw, 56px);
+  border-top: 1px solid currentColor;
+}
+.sys-item:last-child { border-bottom: 1px solid currentColor; }
+.sys-main { display: grid; gap: 12px; align-content: start; }
+.sys-title { font-size: var(--text-sub); font-weight: 400; line-height: 1; letter-spacing: -0.015em; }
+.sys-main p { max-width: 52ch; }
+.sys-main .text-link { justify-self: start; }
+
+.sys-meta { display: grid; gap: 6px; margin: 0; align-content: start; }
+.sys-meta div { display: grid; grid-template-columns: 9ch 1fr; gap: 12px; }
+.sys-meta dd { margin: 0; }
+
+@media (min-width: 900px) {
+  .sys-item { grid-template-columns: repeat(12, 1fr); }
+  .sys-num { grid-column: 1 / span 1; }
+  .sys-main { grid-column: 2 / span 6; }
+  .sys-meta { grid-column: 9 / -1; }
+}
+
+/* ---------- Sitios ---------- */
 
 .work .display { margin-bottom: clamp(48px, 7vw, 112px); }
 .count {
@@ -316,13 +345,15 @@ ol, ul { list-style: none; }
 .edu-item h3 { font-size: var(--text-sub); font-weight: 400; line-height: 1; letter-spacing: -0.015em; max-width: 20ch; }
 .edu-item p { max-width: 40ch; }
 .edu-item .text-link { justify-self: start; margin-top: 8px; }
+.edu-links { display: flex; flex-wrap: wrap; gap: 0 20px; }
 
 @media (min-width: 768px) {
   .edu-list { grid-template-columns: 1fr 1fr; gap: 80px 24px; }
 }
+/* 8 ítems: el primero ocupa 2 columnas y los 7 restantes completan 3 filas exactas. */
 @media (min-width: 1100px) {
   .edu-list { grid-template-columns: repeat(3, 1fr); }
-  .edu-item:first-child { grid-column: span 2; grid-row: span 2; }
+  .edu-item:first-child { grid-column: span 2; }
   .edu-item:first-child h3 { font-size: var(--text-heading); letter-spacing: -0.03em; max-width: 18ch; }
 }
 
